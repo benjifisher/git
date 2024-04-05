@@ -1689,7 +1689,7 @@ EOF
 		} else {
 			print __("Result: OK");
 		}
-		print "\n\n";
+		print "\n";
 	}
 
 	return 1;
@@ -1917,16 +1917,21 @@ sub pre_process_file {
 # Prepares the email, prompts the user, and sends it out
 # Returns 0 if an edit was done and the function should be called again, or 1
 # on the email being successfully sent out.
+my $want_separator_before_send_message = 0;
+
 sub process_file {
 	my ($t) = @_;
 
         pre_process_file($t, $quiet);
 
+	print "\n" if ($want_separator_before_send_message);
 	my $message_was_sent = send_message();
 	if ($message_was_sent == -1) {
 		do_edit($t);
+		$want_separator_before_send_message = 0;
 		return 0;
 	}
+	$want_separator_before_send_message = $message_was_sent;
 
 	# set up for the next message
 	if ($thread) {
