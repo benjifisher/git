@@ -188,6 +188,12 @@ For shell scripts specifically (not exhaustive):
    hopefully nobody starts using "local" before they are reimplemented
    in C ;-)
 
+ - Some versions of shell do not understand "export variable=value",
+   so we write "export variable" and "variable=value" on separae
+   lines.  Note that this was reported in 2013 and the situation might
+   have changed since then.  We'd need to re-evaluate this rule,
+   together with the rule in t/check-non-portable-shell.pl script.
+
  - Use octal escape sequences (e.g. "\302\242"), not hexadecimal (e.g.
    "\xc2\xa2") in printf format strings, since hexadecimal escape
    sequences are not portable.
